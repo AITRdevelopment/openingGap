@@ -10,6 +10,7 @@ python = "^3.10"
 pandas = "^2.0.3"
 pickles = "^0.1.1"
 pytest = "^7.4.0"
+safety = "^2.3.5"
 
 
 [build-system]

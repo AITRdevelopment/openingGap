@@ -1,6 +1,6 @@
 #############################################################################################
 #
-#      You could CHOOSE dataset and sessionTimeDay0/1 to pas to the openingsGap function.
+#      You could CHOOSE dataset together with sessionTimeDay0/1 to pass to the openingsGap function.
 #      Please see the comments marked with !!!! below for details.
 #
 #############################################################################################
@@ -37,28 +37,14 @@ def resample(data, sample):
 #    raise NotImplementedError()
 
 
-# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-# !!     To test on different datasets/files and/օr sessionTimeDay:
-# !!      1) Uncomment import of additional datasets below ( "from datasets_builder import" line)
-# !!      2) Uncomment selected dataset/file below
-# !!      3) Uncomment selected session0 and session1 options below
-# !!      4) Uncomment one of the openings_gap_inds options at the bottom of this file
-# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+# !!
+# !!    To import some other datasets, uncomment the line below
+# !!    Datasets are described in datasets_builder.py
+# !!
+# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 #
-# to import some other datasets
-# from datasets_builder import AAPL_5_min_short_day, AAPL_min_cut, AAPL_min_w_gap
-#
-dataset = pd.read_pickle("./data/AAPL_min.pickle")
-# dataset = pd.read_pickle("./data/AAPL_5_min.pickle")
-# dataset = AAPL_5_min_short_day
-# AAPL_min_cut
-# AAPL_min_w_gap
-# session0 = '10m'
-session0 = "1D"
-# session1 = '15m'
-# session1 = '12m'
-# session1 = '23h'
-session1 = "10m"
+# from datasets_builder import AAPL_5_min_short_day, AAPL_min_cut, AAPL_min_w_gap, empty_dataset
 
 
 # if __name__ == "__main__":
@@ -66,17 +52,34 @@ session1 = "10m"
 #    print(openingsGap(df))
 
 
-# if __name__ == "__main__":
-
-df = dataset
-
-# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-# !!     Uncomment one of two print lines to launch the function:
-# !!     with uncomented above session0 and session1 as sessionTimeDay args
-# !!     or without passing sessionTimeDay args
-# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+# !!
+# !!     Uncomment two subsequent lines to launch the function with specified args
+# !!
+# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 #
+df = pd.read_pickle("./data/AAPL_min.pickle")
 openings_gap_inds = openingsGap(df)
-# openings_gap_inds = openingsGap(df, session0, session1)
+#
+# df = pd.read_pickle("./data/AAPL_5_min.pickle")
+# openings_gap_inds = openingsGap(df)
+#
+# df = AAPL_min_cut
+# openings_gap_inds = openingsGap(df)
+#
+# df = pd.read_pickle("./data/AAPL_5_min.pickle")
+# openings_gap_inds = openingsGap(df, sessionTimeDay0='10m', sessionTimeDay1='4m')
+#
+# df = pd.read_pickle("./data/AAPL_5_min.pickle")
+# openings_gap_inds = openingsGap(df, sessionTimeDay0='10m', sessionTimeDay1='12m')
+#
+# df = AAPL_min_w_gap
+# openings_gap_inds = openingsGap(df, sessionTimeDay0='10m', sessionTimeDay1='12m')
+#
+# df = AAPL_5_min_short_day
+# openings_gap_inds = openingsGap(df, sessionTimeDay0='3h', sessionTimeDay1='23h')
+#
+# df = empty_dataset
+# openings_gap_inds = openingsGap(df, sessionTimeDay0='3h', sessionTimeDay1='23h')
 
 print(openings_gap_inds)

@@ -33,6 +33,12 @@ AAPL_min_cut = data1min[data1min.index <= "2023-04-25 16:00:00"]
 #  - previous one
 # The target is to emulate the case when day consists of less rows than sessionTimeDay1
 AAPL_5_min_short_day = data5min[
-    (data5min.index <= "2023-04-25 09:30:00")
+    (data5min.index <= "2023-04-25 09:40:00")
     & (data5min.index >= "2023-04-24 09:30:00")
+]
+
+# build an empty dataset
+empty_dataset = AAPL_5_min_short_day[
+    (AAPL_5_min_short_day.index > "2023-04-25 09:40:00")
+    & (AAPL_5_min_short_day.index < "2023-04-24 09:30:00")
 ]

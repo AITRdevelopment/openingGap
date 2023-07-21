@@ -15,8 +15,12 @@ def openingsGap(data, sessionTimeDay0="1D", sessionTimeDay1="10m"):
         return session_time
 
     # ---------------------------------------------------------------
+    # Raise an error if the initial dataframe is empty
     # Raise an error if sessionTimeDay more than 24 hours
     # Determinate the data initial sampling rate and raise an error if it and sessionTimeDay don't match
+
+    if data.shape[0] == 0:
+        raise ValueError("Initial dataframe is empty")
 
     day0_session_len = session_time_treatment(sessionTimeDay0)
     day1_session_len = session_time_treatment(sessionTimeDay1)

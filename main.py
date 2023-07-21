@@ -59,27 +59,27 @@ def resample(data, sample):
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 #
 df = pd.read_pickle("./data/AAPL_min.pickle")
-openings_gap_inds = openingsGap(df)
+openings_gap_inds = openingsGap(df)  # regular input args
 #
 # df = pd.read_pickle("./data/AAPL_5_min.pickle")
-# openings_gap_inds = openingsGap(df)
+# openings_gap_inds = openingsGap(df)   # regular input args
 #
 # df = AAPL_min_cut
-# openings_gap_inds = openingsGap(df)
+# openings_gap_inds = openingsGap(df)   # regular input args, same datetime min-max borders as for AAPL_5_min
 #
 # df = pd.read_pickle("./data/AAPL_5_min.pickle")
-# openings_gap_inds = openingsGap(df, sessionTimeDay0='10m', sessionTimeDay1='4m')
+# openings_gap_inds = openingsGap(df, sessionTimeDay0='10m', sessionTimeDay1='4m') # sessionTimeDay1 lower than sampling rate
 #
 # df = pd.read_pickle("./data/AAPL_5_min.pickle")
-# openings_gap_inds = openingsGap(df, sessionTimeDay0='10m', sessionTimeDay1='12m')
+# openings_gap_inds = openingsGap(df, sessionTimeDay0='10m', sessionTimeDay1='12m')     # regular input args
 #
 # df = AAPL_min_w_gap
-# openings_gap_inds = openingsGap(df, sessionTimeDay0='10m', sessionTimeDay1='12m')
+# openings_gap_inds = openingsGap(df, sessionTimeDay0='10m', sessionTimeDay1='12m')     # regular input args
 #
 # df = AAPL_5_min_short_day
-# openings_gap_inds = openingsGap(df, sessionTimeDay0='3h', sessionTimeDay1='23h')
+# openings_gap_inds = openingsGap(df, sessionTimeDay0='3h', sessionTimeDay1='23h')  # day1 has less samples than sessionTimeDay1
 #
 # df = empty_dataset
-# openings_gap_inds = openingsGap(df, sessionTimeDay0='3h', sessionTimeDay1='23h')
+# openings_gap_inds = openingsGap(df, sessionTimeDay0='3h', sessionTimeDay1='23h')  # empty initial df
 
 print(openings_gap_inds)

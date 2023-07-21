@@ -42,3 +42,8 @@ empty_dataset = AAPL_5_min_short_day[
     (AAPL_5_min_short_day.index > "2023-04-25 09:40:00")
     & (AAPL_5_min_short_day.index < "2023-04-24 09:30:00")
 ]
+
+# build dataset with one row only
+one_day_dataset = AAPL_5_min_short_day[
+    (AAPL_5_min_short_day.index < "2023-04-25 00:00:00")
+]

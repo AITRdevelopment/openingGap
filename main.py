@@ -48,7 +48,7 @@ def resample(data, sample):
 # !!
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 #
-# from datasets_builder import AAPL_5_min_short_day, AAPL_min_cut, AAPL_min_w_gap, empty_dataset
+# from datasets_builder import AAPL_5_min_short_day, AAPL_min_cut, AAPL_min_w_gap, empty_dataset, one_day_dataset
 
 
 # if __name__ == "__main__":
@@ -84,6 +84,9 @@ openings_gap_inds = openingsGap(df)  # regular input args
 # openings_gap_inds = openingsGap(df, sessionTimeDay0='3h', sessionTimeDay1='23h')  # day1 has less samples than sessionTimeDay1
 #
 # df = empty_dataset
-# openings_gap_inds = openingsGap(df, sessionTimeDay0='3h', sessionTimeDay1='23h')  # empty initial df
+# openings_gap_inds = openingsGap(df, sessionTimeDay0='10m', sessionTimeDay1='10m')  # empty initial df
+#
+# df = one_day_dataset
+# openings_gap_inds = openingsGap(df, sessionTimeDay0='10m', sessionTimeDay1='10m')  # empty initial df
 
 print(openings_gap_inds)

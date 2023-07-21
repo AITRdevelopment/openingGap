@@ -17,6 +17,7 @@ def openingsGap(data, sessionTimeDay0="1D", sessionTimeDay1="10m"):
     # ---------------------------------------------------------------
     # Raise an error if the initial dataframe is empty
     # Raise an error if sessionTimeDay more than 24 hours
+    # Raise an error if the initial dataframe is consists of one day only
     # Determinate the data initial sampling rate and raise an error if it and sessionTimeDay don't match
 
     if data.shape[0] == 0:
@@ -53,6 +54,9 @@ def openingsGap(data, sessionTimeDay0="1D", sessionTimeDay1="10m"):
     data_sampling_period = datac[
         "neigh_samples_diff"
     ].min()  # min timedelta between the neighbour timestamps
+
+    if datac["date-time"].dt.date.max() == datac["date-time"].dt.date.min():
+        raise ValueError("Initial dataframe consists of one day only")
 
     if data_sampling_period <= day0_session_len:
         sessionTimeDay0_low = False

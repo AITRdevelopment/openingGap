@@ -3,6 +3,10 @@
 #      You could CHOOSE dataset together with sessionTimeDay0/1 to pass to the openingsGap function.
 #      Please see the comments marked with !!!! below for details.
 #
+#      Than run this main.py and after that ran python -m pytest
+#        -s to show prints in tests
+#        --verbose to show more info
+#
 #############################################################################################
 
 # import numpy as np

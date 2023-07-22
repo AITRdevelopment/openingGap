@@ -13,6 +13,7 @@
 
 # import numpy as np
 import pandas as pd
+from inputimeout import inputimeout
 
 from openingsGap_func import openingsGap
 
@@ -55,26 +56,32 @@ from datasets_builder import (
 #    df = pd.read_pickle("./data/AAPL_min.pickle")
 #    print(openingsGap(df))
 
-
-choice = input(
-    "Chosse the input arguments set by typing corresponfing number. Then press Enter.\n \
-    1  - AAPL_min; no sessionTimeDay\n \
-    2  - AAPL_5_min; no sessionTimeDay\n \
-    3  - AAPL_min based df with the same earliest and latest datetime as for AAPL_5_min; no sessionTimeDay\n \
-    4  - AAPL_5_min based df with several rows deleted; sessionTimeDay0='20m', sessionTimeDay1='15m'; gaps in the session\n \
-    5  - AAPL_5_min; sessionTimeDay1='4m', it's lower than the sampling rate\n \
-         Don't use for testing, use only to see the function output\n \
-    6  - AAPL_5_min; sessionTimeDay0='10m', sessionTimeDay1='12m', it doesn't match with df sampling rate\n \
-         Don't use for testing, use only to see the function output\n \
-    7  - AAPL_5_min; sessionTimeDay0='3h', sessionTimeDay1='23h'; day1 has less samples than sessionTimeDay1\n \
-    8  - empty df at the input; sessionTimeDay0='10m', sessionTimeDay1='10m'\n \
-         Don't use for testing, use only to see the function output\n \
-    9  - one-day df at the input; sessionTimeDay0='10m', sessionTimeDay1='10m'\n \
-         Don't use for testing, use only to see the function output\n \
-    10 - AAPL_5_min; sessionTimeDay0='25h', it's over than 24 hours\n \
-         Don't use for testing, use only to see the function output\n\n \
-    Make your choice: "
-)
+try:
+    choice = inputimeout(
+        prompt="\n     \
+        Chosse the input arguments set by typing corresponfing number. Then press Enter.\n \
+        You have 1 min to make yout choice\n \
+            1  - AAPL_min; no sessionTimeDay\n \
+            2  - AAPL_5_min; no sessionTimeDay\n \
+            3  - AAPL_min based df with the same earliest and latest datetime as for AAPL_5_min; no sessionTimeDay\n \
+            4  - AAPL_5_min based df with several rows deleted; sessionTimeDay0='20m', sessionTimeDay1='15m'; gaps in the session\n \
+            5  - AAPL_5_min; sessionTimeDay1='4m', it's lower than the sampling rate\n \
+                Don't use for testing, use only to see the function output\n \
+            6  - AAPL_5_min; sessionTimeDay0='10m', sessionTimeDay1='12m', it doesn't match with df sampling rate\n \
+                Don't use for testing, use only to see the function output\n \
+            7  - AAPL_5_min; sessionTimeDay0='3h', sessionTimeDay1='23h'; day1 has less samples than sessionTimeDay1\n \
+            8  - empty df at the input; sessionTimeDay0='10m', sessionTimeDay1='10m'\n \
+                Don't use for testing, use only to see the function output\n \
+            9  - one-day df at the input; sessionTimeDay0='10m', sessionTimeDay1='10m'\n \
+                Don't use for testing, use only to see the function output\n \
+            10 - AAPL_5_min; sessionTimeDay0='25h', it's over than 24 hours\n \
+                Don't use for testing, use only to see the function output\n\n \
+            Make your choice: ",
+        timeout=10,
+    )
+except Exception:
+    choice = "1"
+    print("\n\nDefault choice (option 1) has been made, option 1")
 
 if choice == "1":
     df = pd.read_pickle("./data/AAPL_min.pickle")
@@ -107,4 +114,4 @@ elif choice == "10":
     df = pd.read_pickle("./data/AAPL_5_min.pickle")
     openings_gap_inds = openingsGap(df, sessionTimeDay0="25h")
 
-print(openings_gap_inds)
+print("\nThe function output:\n\n", openings_gap_inds)

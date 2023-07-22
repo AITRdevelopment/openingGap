@@ -23,7 +23,7 @@ def test_example():
 # import numpy as np
 import pandas as pd
 
-from main import (  # AAPL_5_min_short_day,; AAPL_min_cut,; AAPL_min_w_gap,; empty_dataset,; one_day_dataset,
+from main import (  # , AAPL_5_min_short_day, AAPL_min_cut, AAPL_min_w_gap, empty_dataset, one_day_dataset
     df,
     openings_gap_inds,
     openingsGap,

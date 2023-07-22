@@ -27,7 +27,7 @@ jobs:
       #----------------------------------------------
       - name: Test with pytest
         run: |
-          poetry run python -m pytest
+          poetry run python -m pytest -s
   Audit:
     runs-on: ubuntu-latest
     timeout-minutes: 30

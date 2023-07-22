@@ -1,3 +1,17 @@
+#############################################################################################
+#
+#     You could run test with cmd
+#           python -m pytest -s
+#      or
+#           python -m pytest -s --verbose          to show more info
+#      but don't omit -s in any case!
+#
+#      After starting the tests you will be asked to CHOOSE
+#      dataset together with sessionTimeDay0/1 to pass to the openingsGap function.
+#
+#############################################################################################
+
+
 def test_example():
     assert True
 

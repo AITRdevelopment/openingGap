@@ -20,9 +20,33 @@ def test_example():
 #    assert False
 
 
+# import numpy as np
 import pandas as pd
 
-from main import df, openings_gap_inds
+from main import (  # AAPL_5_min_short_day,; AAPL_min_cut,; AAPL_min_w_gap,; empty_dataset,; one_day_dataset,
+    df,
+    openings_gap_inds,
+    openingsGap,
+)
+
+
+def test8():
+    pass
+
+
+def test9():
+    try:
+        openingsGap(pd.read_pickle("./data/AAPL_5_min.pickle"), sessionTimeDay1="4m")
+    except Exception as e:
+        assert (
+            type(e) == ValueError
+            and e.args[0]
+            == "Wrong input: sessionTimeDay1 lower than data sampling rate"
+        ), "TEST sessionTimeDay lower than data sampling rate PARTHLY PASSED - code should raise another error"
+    else:
+        assert (
+            False
+        ), "TEST sessionTimeDay lower than data sampling rate NOT PASSED - code hasn't catch the issue"
 
 
 def test1():

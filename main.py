@@ -66,18 +66,18 @@ try:
             3  - AAPL_min based df with the same earliest and latest datetime as for AAPL_5_min; no sessionTimeDay\n \
             4  - AAPL_5_min based df with several rows deleted; sessionTimeDay0='20m', sessionTimeDay1='15m'; gaps in the session\n \
             5  - AAPL_5_min; sessionTimeDay1='4m', it's lower than the sampling rate\n \
-                Don't use for testing, use only to see the function output\n \
+                 Don't use for testing, use only to see the function output\n \
             6  - AAPL_5_min; sessionTimeDay0='10m', sessionTimeDay1='12m', it doesn't match with df sampling rate\n \
-                Don't use for testing, use only to see the function output\n \
+                 Don't use for testing, use only to see the function output\n \
             7  - AAPL_5_min; sessionTimeDay0='3h', sessionTimeDay1='23h'; day1 has less samples than sessionTimeDay1\n \
             8  - empty df at the input; sessionTimeDay0='10m', sessionTimeDay1='10m'\n \
-                Don't use for testing, use only to see the function output\n \
+                 Don't use for testing, use only to see the function output\n \
             9  - one-day df at the input; sessionTimeDay0='10m', sessionTimeDay1='10m'\n \
-                Don't use for testing, use only to see the function output\n \
+                 Don't use for testing, use only to see the function output\n \
             10 - AAPL_5_min; sessionTimeDay0='25h', it's over than 24 hours\n \
-                Don't use for testing, use only to see the function output\n\n \
+                 Don't use for testing, use only to see the function output\n\n \
             Make your choice: ",
-        timeout=10,
+        timeout=60,
     )
 except Exception:
     choice = "1"
@@ -114,4 +114,5 @@ elif choice == "10":
     df = pd.read_pickle("./data/AAPL_5_min.pickle")
     openings_gap_inds = openingsGap(df, sessionTimeDay0="25h")
 
-print("\nThe function output:\n\n", openings_gap_inds)
+if __name__ == "__main__":
+    print("\nThe function output:\n\n", openings_gap_inds)

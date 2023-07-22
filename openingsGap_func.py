@@ -5,14 +5,20 @@ import numpy as np
 # import pickle
 
 
+# ------------------------------------------------------------------
+#  Function to format the inputed sessionTimeDay as numpy.timedelta64
+
+
+def session_time_treatment(session_time):
+    session_time = np.timedelta64(int(session_time[:-1]), session_time[-1:])
+    return session_time
+
+
+# ------------------------------------------------------------------
+#  openingsGap function
+
+
 def openingsGap(data, sessionTimeDay0="1D", sessionTimeDay1="10m"):
-
-    # ------------------------------------------------------------------
-    #  Function to format the inputed sessionTimeDay as numpy.timedelta64
-
-    def session_time_treatment(session_time):
-        session_time = np.timedelta64(int(session_time[:-1]), session_time[-1:])
-        return session_time
 
     # ---------------------------------------------------------------
     # Raise an error if the initial dataframe is empty

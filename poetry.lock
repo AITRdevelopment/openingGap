@@ -144,14 +144,6 @@ optional = false
 python-versions = "*"
 
 [[package]]
-name = "inputimeout"
-version = "1.0.4"
-description = "Multi platform standard input with timeout"
-category = "main"
-optional = false
-python-versions = ">=3.4"
-
-[[package]]
 name = "pluggy"
 version = "1.2.0"
 description = "plugin and hook calling mechanisms for python"
@@ -495,9 +487,6 @@ pandas = [
 ]
 pickles = [
     {file = "pickles-0.1.1-py3-none-any.whl", hash = "sha256:bf6b45d7974675bdd25b55f7ea8e02454adb1df7d01e70ad12bd38fee9111c2a"},
-]
-inputimeout = [
-    {file = "inputimeout-1.0.4-py3-none-any.whl", hash = "sha256:f4e23d27753cfc25268eefc8d52a3edc46280ad831d226617c51882423475a43"},
 ]
 pluggy = [
     {file = "pluggy-1.2.0-py3-none-any.whl", hash = "sha256:c2fd55a7d7a3863cba1a013e4e2414658b1d07b6bc57b3919e0c63c9abb99849"},

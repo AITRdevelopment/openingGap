@@ -144,14 +144,6 @@ optional = false
 python-versions = "*"
 
 [[package]]
-name = "inputimeout"
-version = "1.0.4"
-description = "Multi platform standard input with timeout"
-category = "main"
-optional = false
-python-versions = ">=3.4"
-
-[[package]]
 name = "pluggy"
 version = "1.2.0"
 description = "plugin and hook calling mechanisms for python"

@@ -26,8 +26,8 @@ pre-commit run --all-files
 ## For testing:
 from root directory
 ```
-python -m pytest 
--s to show prints in tests
+python -m pytest -s
+-s to show prints in tests  !! please always use this option as you need to see the question and type your answer !!
 --verbose to show more info
 
 python -m pytest --cov=app/core 

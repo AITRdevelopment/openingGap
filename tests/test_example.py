@@ -37,6 +37,12 @@ def test1_interpret_sessionTimeDay():
     assert session_time_treatment("18m") == np.timedelta64(
         18, "m"
     ), "sessionTimeDay arg wrong interpretation"
+    assert session_time_treatment("3h") == np.timedelta64(
+        3, "h"
+    ), "sessionTimeDay arg wrong interpretation"
+    assert session_time_treatment("1D") == np.timedelta64(
+        1, "D"
+    ), "sessionTimeDay arg wrong interpretation"
 
 
 def test2_empty_init_df():

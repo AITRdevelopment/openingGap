@@ -1,9 +1,4 @@
 [[package]]
-name = "inputimeout"
-category = "main"
-optional = false
-
-[[package]]
 name = "certifi"
 version = "2023.5.7"
 description = "Python package for providing Mozilla's CA Bundle."

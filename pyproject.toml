@@ -11,7 +11,7 @@ pandas = "^2.0.3"
 pickles = "^0.1.1"
 pytest = "^7.4.0"
 safety = "^2.3.5"
-inputimeout = "^1.0.4"
+
 
 [build-system]
 requires = ["poetry-core"]

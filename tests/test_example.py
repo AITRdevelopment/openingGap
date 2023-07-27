@@ -78,7 +78,7 @@ def test_one_day_only_df_should_throw_error():
         ), "TEST Initial dataframe consists of one day only NOT PASSED - code hasn't catch the issue"
 
 
-def test_sessionTimeDay_lower_than_sampling_should_throw_error():
+def test_session_time_lower_than_sampling_should_throw_error():
     try:
         openingsGap(pd.read_pickle("./data/AAPL_5_min.pickle"), sessionTimeDay1="4m")
     except Exception as e:
@@ -93,7 +93,7 @@ def test_sessionTimeDay_lower_than_sampling_should_throw_error():
         ), "TEST sessionTimeDay lower than data sampling rate NOT PASSED - code hasn't catch the issue"
 
 
-def test_sessionTimeDay_unmatch_sampling_should_throw_error():
+def test_session_time_unmatch_sampling_should_throw_error():
     try:
         openingsGap(
             pd.read_pickle("./data/AAPL_5_min.pickle"),

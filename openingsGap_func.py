@@ -1,3 +1,11 @@
+#############################################################################################
+#
+#   openingsGap func returns two values,
+#   but the 2nd value is returned for testing purpose only; !! should be removed in prod !!
+#
+#############################################################################################
+
+
 import numpy as np
 
 # ------------------------------------------------------------------
@@ -94,6 +102,7 @@ def openingsGap(data, sessionTimeDay0="1D", sessionTimeDay1="10m"):
     sessionTimeDay0High, sessionTimeDay1High = session_time_greater_than_day_flags_drop(
         day0_session_len, day1_session_len, sessionTimeDay0High, sessionTimeDay1High
     )
+
     if sessionTimeDay0High and sessionTimeDay1High:
         raise ValueError(
             "Wrong input: sessionTimeDay0 and sessionTimeDay1 are over than 24 hours"
@@ -125,6 +134,7 @@ def openingsGap(data, sessionTimeDay0="1D", sessionTimeDay1="10m"):
         sessionTimeDay0_unmatch,
         sessionTimeDay1_unmatch,
     )
+
     if sessionTimeDay0Low and sessionTimeDay1Low:
         raise ValueError(
             "Wrong input: sessionTimeDay0 and sessionTimeDay1 lower than data sampling rate"
@@ -218,4 +228,7 @@ def openingsGap(data, sessionTimeDay0="1D", sessionTimeDay1="10m"):
     openingsGaps.set_index("date_day1", drop=True, append=False, inplace=True)
     openingsGaps.sort_index(axis=0, ascending=False, inplace=True)
 
-    return openingsGaps
+    return (
+        openingsGaps,
+        days01_w_shift,
+    )  # !! the 2nd value is returned for testing purpose only; should be removed in prod !!

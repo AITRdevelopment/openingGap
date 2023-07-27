@@ -58,11 +58,11 @@ try:
             2  - AAPL_5_min; no sessionTimeDay\n \
             3  - AAPL_min based df with the same earliest and latest datetime as for AAPL_5_min; no sessionTimeDay\n \
             4  - AAPL_min based df with several rows deleted; sessionTimeDay0='20m', sessionTimeDay1='15m'; gaps in the session\n \
-            5  - AAPL_5_min; sessionTimeDay1='4m', it's lower than the sampling rate\n \
+            5  - AAPL_5_min; sessionTimeDay0='3h', sessionTimeDay1='23h'; day1 has less samples than sessionTimeDay1\n \
+            6  - AAPL_5_min; sessionTimeDay1='4m', it's lower than the sampling rate\n \
                  Don't use for testing, use only to see the function output\n \
-            6  - AAPL_5_min; sessionTimeDay0='10m', sessionTimeDay1='12m', it doesn't match with df sampling rate\n \
+            7  - AAPL_5_min; sessionTimeDay0='10m', sessionTimeDay1='12m', it doesn't match with df sampling rate\n \
                  Don't use for testing, use only to see the function output\n \
-            7  - AAPL_5_min; sessionTimeDay0='3h', sessionTimeDay1='23h'; day1 has less samples than sessionTimeDay1\n \
             8  - empty df at the input; sessionTimeDay0='10m', sessionTimeDay1='10m'\n \
                  Don't use for testing, use only to see the function output\n \
             9  - one-day df at the input; sessionTimeDay0='10m', sessionTimeDay1='10m'\n \
@@ -78,34 +78,48 @@ except Exception:
 
 if choice == "1":
     df = pd.read_pickle("./data/AAPL_min.pickle")
-    openings_gap_inds = openingsGap(df)
+    openings_gap_inds, openings_gap_full_df = openingsGap(df)
 elif choice == "2":
     df = pd.read_pickle("./data/AAPL_5_min.pickle")
-    openings_gap_inds = openingsGap(df)
+    openings_gap_inds, openings_gap_full_df = openingsGap(df)
 elif choice == "3":
     df = data_minute_cut
-    openings_gap_inds = openingsGap(df)
+    openings_gap_inds, openings_gap_full_df = openingsGap(df)
 elif choice == "4":
     df = data_minute_with_gap
-    openings_gap_inds = openingsGap(df, sessionTimeDay0="20m", sessionTimeDay1="15m")
+    openings_gap_inds, openings_gap_full_df = openingsGap(
+        df, sessionTimeDay0="20m", sessionTimeDay1="15m"
+    )
 elif choice == "5":
-    df = pd.read_pickle("./data/AAPL_5_min.pickle")
-    openings_gap_inds = openingsGap(df, sessionTimeDay1="4m")
+    df = data_5_minute_short_day
+    openings_gap_inds, openings_gap_full_df = openingsGap(
+        df, sessionTimeDay0="3h", sessionTimeDay1="23h"
+    )
 elif choice == "6":
     df = pd.read_pickle("./data/AAPL_5_min.pickle")
-    openings_gap_inds = openingsGap(df, sessionTimeDay0="10m", sessionTimeDay1="12m")
+    openings_gap_inds, openings_gap_full_df = openingsGap(df, sessionTimeDay1="4m")
 elif choice == "7":
-    df = data_5_minute_short_day
-    openings_gap_inds = openingsGap(df, sessionTimeDay0="3h", sessionTimeDay1="23h")
+    df = pd.read_pickle("./data/AAPL_5_min.pickle")
+    openings_gap_inds, openings_gap_full_df = openingsGap(
+        df, sessionTimeDay0="10m", sessionTimeDay1="12m"
+    )
 elif choice == "8":
     df = empty_data
-    openings_gap_inds = openingsGap(df, sessionTimeDay0="10m", sessionTimeDay1="10m")
+    openings_gap_inds, openings_gap_full_df = openingsGap(
+        df, sessionTimeDay0="10m", sessionTimeDay1="10m"
+    )
 elif choice == "9":
     df = one_day_data
-    openings_gap_inds = openingsGap(df, sessionTimeDay0="10m", sessionTimeDay1="10m")
+    openings_gap_inds, openings_gap_full_df = openingsGap(
+        df, sessionTimeDay0="10m", sessionTimeDay1="10m"
+    )
 elif choice == "10":
     df = pd.read_pickle("./data/AAPL_5_min.pickle")
-    openings_gap_inds = openingsGap(df, sessionTimeDay0="25h")
+    openings_gap_inds, openings_gap_full_df = openingsGap(df, sessionTimeDay0="25h")
 
 if __name__ == "__main__":
     print("\nThe function output:\n\n", openings_gap_inds)
+    print(
+        "\nThe full df with final values:\n\n",
+        openings_gap_full_df.sort_index(axis=0, ascending=False, inplace=False),
+    )

@@ -9,10 +9,10 @@
 #      After starting the tests you will be asked to CHOOSE
 #      dataset together with sessionTimeDay0/1 to pass to the openingsGap function.
 #
-#      Tests 1 to 6 tests Functions ability to detect incorrected input args and raise the relevant error.
+#      Some tests are testing Function's ability to detect incorrected input args and raise the relevant error.
 #      These tests use build-in input args and don't depend on the option you choose.
 #
-#      Tests 7 to 12 are testing Function output dataframe itself and in cojunction with input dataframe.
+#      Other tests are testing Function's output dataframe itself and in cojunction with input dataframe.
 #      These tests use the input args from the option you choose.
 #
 #############################################################################################
@@ -21,7 +21,14 @@
 import numpy as np
 import pandas as pd
 
-from main import df, empty_data, one_day_data, openings_gap_inds, openingsGap
+from main import (
+    df,
+    empty_data,
+    one_day_data,
+    openings_gap_full_df,
+    openings_gap_inds,
+    openingsGap,
+)
 from openingsGap_func import session_time_treatment
 
 
@@ -112,19 +119,19 @@ def test_session_time_unmatch_sampling_should_throw_error():
         ), "TEST sessionTimeDay unmatch data sampling rate NOT PASSED - code hasn't catch the issue"
 
 
-def test_blank_gapUp_in_output_should_throw_error():
+def test_every_gapUp_in_output_should_not_be_blank():
     assert set(openings_gap_inds["openingsGapUp"].isin([True, False])) == {
         True
     }, "openingsGapUp column has at least one blank value"
 
 
-def test_blank_gapDown_in_output_should_throw_error():
+def test_every_gapDown_in_output_should_not_be_blank():
     assert set(openings_gap_inds["openingsGapDown"].isin([True, False])) == {
         True
     }, "openingsGapDown column has at least one blank value"
 
 
-def test_both_gapUp_and_Down_set_should_throw_error():
+def test_both_gapUp_and_Down_should_not_be_set_both():
     openings_gap_inds["both_gaps"] = (
         openings_gap_inds["openingsGapUp"] & openings_gap_inds["openingsGapDown"]
     )
@@ -134,20 +141,42 @@ def test_both_gapUp_and_Down_set_should_throw_error():
     ), "both openingsGapUp and openingsGapDown set for some day(s)"
 
 
-def test_wrong_nbr_of_rows_in_output_should_throw_error():
+def test_nbr_of_rows_in_output_should_contain_nbr_of_days_in_data_minus_one():
     assert (pd.Series(df.index).dt.date.nunique() - 1) == openings_gap_inds.shape[
         0
     ], "final table contains not exectly one day less then initial data"
 
 
-def test_wrong_latest_day_in_output_should_throw_error():
+def test_latest_day_in_output_should_be_next_available_day_in_data():
     assert (
         pd.Series(df.index).dt.date[0] == openings_gap_inds.index[0]
     ), "initial data and final table contains different dates in the upper row (different latest dates)"
 
 
-def test_wrong_earliest_day_in_output_should_throw_error():
+def test_earliest_day_in_output_should_be_first_day_in_data():
     assert (
         pd.Series(df.index).dt.date.drop_duplicates(inplace=False).iloc[-2]
         == openings_gap_inds.index[-1]
     ), "the date after latest in the initial data is not the same as the earliest day in the final table"
+
+
+def test_day0_day1_shift_should_be_correct():
+    openings_gap_full_df.sort_index(axis=0, ascending=False, inplace=True)
+    openings_gap_full_df["data_neigh_days1_diff"] = openings_gap_full_df[
+        "date_day1"
+    ].diff(periods=-1)
+    openings_gap_full_df["output_one_row_days_diff"] = (
+        openings_gap_full_df["date_day1"] - openings_gap_full_df["date_day0"]
+    )
+    assert list(
+        openings_gap_full_df["output_one_row_days_diff"].drop(
+            index=openings_gap_full_df.last_valid_index(), axis=0, inplace=False
+        )
+    ) == list(
+        openings_gap_full_df["data_neigh_days1_diff"].drop(
+            index=openings_gap_full_df.last_valid_index(), axis=0, inplace=False
+        )
+    ), "day0/day1 shifting is not correct"
+
+
+openings_gap_full_df

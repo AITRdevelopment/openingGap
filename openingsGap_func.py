@@ -1,10 +1,5 @@
 import numpy as np
 
-# import pandas as pd
-
-# import pickle
-
-
 # ------------------------------------------------------------------
 #  Function to format the inputed sessionTimeDay as numpy.timedelta64
 
@@ -31,27 +26,27 @@ def openingsGap(data, sessionTimeDay0="1D", sessionTimeDay1="10m"):
 
     day0_session_len = session_time_treatment(sessionTimeDay0)
     day1_session_len = session_time_treatment(sessionTimeDay1)
-    twenyfourh = np.timedelta64(24, "h")
+    twenty_four_hours = np.timedelta64(24, "h")
 
     # Errors flags initially set to True
-    sessionTimeDay0_high = True
-    sessionTimeDay1_high = True
-    sessionTimeDay0_low = True
-    sessionTimeDay1_low = True
+    sessionTimeDay0High = True
+    sessionTimeDay1High = True
+    sessionTimeDay0Low = True
+    sessionTimeDay1Low = True
     sessionTimeDay0_unmatch = True
     sessionTimeDay1_unmatch = True
 
-    if day0_session_len <= twenyfourh:
-        sessionTimeDay0_high = False
-    if day1_session_len <= twenyfourh:
-        sessionTimeDay1_high = False
-    if sessionTimeDay0_high and sessionTimeDay1_high:
+    if day0_session_len <= twenty_four_hours:
+        sessionTimeDay0High = False
+    if day1_session_len <= twenty_four_hours:
+        sessionTimeDay1High = False
+    if sessionTimeDay0High and sessionTimeDay1High:
         raise ValueError(
             "Wrong input: sessionTimeDay0 and sessionTimeDay1 are over than 24 hours"
         )
-    if sessionTimeDay0_high:
+    if sessionTimeDay0High:
         raise ValueError("Wrong input: sessionTimeDay0 is over than 24 hours")
-    if sessionTimeDay1_high:
+    if sessionTimeDay1High:
         raise ValueError("Wrong input: sessionTimeDay1 is over than 24 hours")
 
     datac = data.copy(deep=True)
@@ -65,16 +60,16 @@ def openingsGap(data, sessionTimeDay0="1D", sessionTimeDay1="10m"):
         raise ValueError("Initial dataframe consists of one day only")
 
     if data_sampling_period <= day0_session_len:
-        sessionTimeDay0_low = False
+        sessionTimeDay0Low = False
     if data_sampling_period <= day1_session_len:
-        sessionTimeDay1_low = False
-    if sessionTimeDay0_low and sessionTimeDay1_low:
+        sessionTimeDay1Low = False
+    if sessionTimeDay0Low and sessionTimeDay1Low:
         raise ValueError(
             "Wrong input: sessionTimeDay0 and sessionTimeDay1 lower than data sampling rate"
         )
-    if sessionTimeDay0_low:
+    if sessionTimeDay0Low:
         raise ValueError("Wrong input: sessionTimeDay0 lower than data sampling rate")
-    if sessionTimeDay1_low:
+    if sessionTimeDay1Low:
         raise ValueError("Wrong input: sessionTimeDay1 lower than data sampling rate")
 
     if day0_session_len / data_sampling_period == int(

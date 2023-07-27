@@ -18,22 +18,14 @@
 #############################################################################################
 
 
-def test_example():
-    assert True
-
-
-# def test_failing_example():
-#    assert False
-
-
 import numpy as np
 import pandas as pd
 
-from main import df, empty_dataset, one_day_dataset, openings_gap_inds, openingsGap
+from main import df, empty_data, one_day_data, openings_gap_inds, openingsGap
 from openingsGap_func import session_time_treatment
 
 
-def test1_interpret_sessionTimeDay():
+def test_interpret_sessionTimeDay():
     assert session_time_treatment("18m") == np.timedelta64(
         18, "m"
     ), "sessionTimeDay arg wrong interpretation"
@@ -45,9 +37,9 @@ def test1_interpret_sessionTimeDay():
     ), "sessionTimeDay arg wrong interpretation"
 
 
-def test2_empty_init_df():
+def test_empty_df_should_throw_error():
     try:
-        openingsGap(empty_dataset)
+        openingsGap(empty_data)
     except Exception as e:
         assert (
             type(e) == ValueError and e.args[0] == "Initial dataframe is empty"
@@ -58,7 +50,7 @@ def test2_empty_init_df():
         ), "TEST Initial dataframe is empty NOT PASSED - code hasn't catch the issue"
 
 
-def test3_sessionTimeDay_over_24():
+def test_session_time_greater_than_day_should_throw_error():
     try:
         openingsGap(pd.read_pickle("./data/AAPL_5_min.pickle"), sessionTimeDay0="26h")
     except Exception as e:
@@ -72,9 +64,9 @@ def test3_sessionTimeDay_over_24():
         ), "TEST sessionTimeDay is over than 24 hours NOT PASSED - code hasn't catch the issue"
 
 
-def test4_one_day_init_df():
+def test_one_day_only_df_should_throw_error():
     try:
-        openingsGap(one_day_dataset)
+        openingsGap(one_day_data)
     except Exception as e:
         assert (
             type(e) == ValueError
@@ -86,7 +78,7 @@ def test4_one_day_init_df():
         ), "TEST Initial dataframe consists of one day only NOT PASSED - code hasn't catch the issue"
 
 
-def test5_sessionTimeDay_lower_sampling():
+def test_sessionTimeDay_lower_than_sampling_should_throw_error():
     try:
         openingsGap(pd.read_pickle("./data/AAPL_5_min.pickle"), sessionTimeDay1="4m")
     except Exception as e:
@@ -101,7 +93,7 @@ def test5_sessionTimeDay_lower_sampling():
         ), "TEST sessionTimeDay lower than data sampling rate NOT PASSED - code hasn't catch the issue"
 
 
-def test6_sessionTimeDay_unmatch_sampling():
+def test_sessionTimeDay_unmatch_sampling_should_throw_error():
     try:
         openingsGap(
             pd.read_pickle("./data/AAPL_5_min.pickle"),
@@ -120,19 +112,19 @@ def test6_sessionTimeDay_unmatch_sampling():
         ), "TEST sessionTimeDay unmatch data sampling rate NOT PASSED - code hasn't catch the issue"
 
 
-def test7_blank_gapUp_in_output():
+def test_blank_gapUp_in_output_should_throw_error():
     assert set(openings_gap_inds["openingsGapUp"].isin([True, False])) == {
         True
     }, "openingsGapUp column has at least one blank value"
 
 
-def test8_blank_gapDown_in_output():
+def test_blank_gapDown_in_output_should_throw_error():
     assert set(openings_gap_inds["openingsGapDown"].isin([True, False])) == {
         True
     }, "openingsGapDown column has at least one blank value"
 
 
-def test9_both_gapUpDown_set():
+def test_both_gapUp_and_Down_set_should_throw_error():
     openings_gap_inds["both_gaps"] = (
         openings_gap_inds["openingsGapUp"] & openings_gap_inds["openingsGapDown"]
     )
@@ -142,19 +134,19 @@ def test9_both_gapUpDown_set():
     ), "both openingsGapUp and openingsGapDown set for some day(s)"
 
 
-def test10_wrong_nbr_of_rows_in_output():
+def test_wrong_nbr_of_rows_in_output_should_throw_error():
     assert (pd.Series(df.index).dt.date.nunique() - 1) == openings_gap_inds.shape[
         0
     ], "final table contains not exectly one day less then initial data"
 
 
-def test11_wrong_latest_day_in_output():
+def test_wrong_latest_day_in_output_should_throw_error():
     assert (
         pd.Series(df.index).dt.date[0] == openings_gap_inds.index[0]
     ), "initial data and final table contains different dates in the upper row (different latest dates)"
 
 
-def test12_wrong_earliest_day_in_output():
+def test_wrong_earliest_day_in_output_should_throw_error():
     assert (
         pd.Series(df.index).dt.date.drop_duplicates(inplace=False).iloc[-2]
         == openings_gap_inds.index[-1]

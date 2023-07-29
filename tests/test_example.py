@@ -31,6 +31,8 @@ from main import (
 )
 from openingsGap_func import session_time_treatment
 
+# import pytest
+
 
 def test_interpret_sessionTimeDay():
     assert session_time_treatment("18m") == np.timedelta64(
@@ -55,6 +57,14 @@ def test_empty_df_should_throw_error():
         assert (
             False
         ), "TEST Initial dataframe is empty NOT PASSED - code hasn't catch the issue"
+
+
+#    with pytest.raises(ValueError, match="Initial dataframe is empty"):
+#        openingsGap(empty_data)
+#        raise Exception("TEST Initial dataframe is empty NOT PASSED - code either hasn't catch the issue or should raise another error")
+#    with pytest.raises(ValueError) as e_info:
+#        openingsGap(empty_data)
+#        assert e_info.args[0] == "Initial dataframe is empty"
 
 
 def test_session_time_greater_than_day_should_throw_error():

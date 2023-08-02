@@ -17,25 +17,6 @@ from inputimeout import inputimeout
 
 from openingsGap_func import openingsGap
 
-"""
-def resample(data, sample):
-    resampled_data = (
-        data.resample(sample)
-        .agg(
-            {
-                "open": "first",
-                "high": "max",
-                "low": "min",
-                "close": "last",
-                "volume": "sum",
-            }
-        )
-        .dropna()
-    )
-    resampled_data.index.name = "datetime"
-    return resampled_data
-"""
-
 
 from datasets_builder import (
     data_5_minute_short_day,
@@ -44,10 +25,6 @@ from datasets_builder import (
     empty_data,
     one_day_data,
 )
-
-# if __name__ == "__main__":
-#    df = pd.read_pickle("./data/AAPL_min.pickle")
-#    print(openingsGap(df))
 
 try:
     choice = inputimeout(
